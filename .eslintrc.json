@@ -12,5 +12,7 @@
         "ecmaVersion": 13
     },
     "rules": {
+        "linebreak-style": "off",
+        "no-unused-vars": "warn"
     }
 }
