@@ -1,11 +1,9 @@
-const dotenv = require('dotenv');
 const Hapi = require('@hapi/hapi');
-dotenv.config();
 
 const init = async () => {
   const server = Hapi.server({
-    port: process.env.PORT,
-    host: process.env.HOST,
+    host: process.env.NODE_ENV !== 'production' ? 'localhost' : '0.0.0.0',
+    port: process.env.NODE_ENV !== 'production' ? 5000 : 80,
   });
 
   await server.start();
