@@ -8,6 +8,14 @@ const init = async () => {
     port: process.env.NODE_ENV !== 'production' ? 5000 : 80,
   });
 
+  server.route({
+    method: 'GET',
+    path: '/',
+    handler: () => ({data: {
+      name: 'Reski Mulud Muchamad',
+    }}),
+  });
+
   await server.start();
   console.log(`Server running at ${server.info.uri}`);
 };
