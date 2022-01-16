@@ -5,7 +5,7 @@ const init = async () => {
     host: process.env.NODE_ENV !== 'production' ?
     'localhost' :
     'api.reskimulud.my.id',
-    port: process.env.NODE_ENV !== 'production' ? 5000 : 80,
+    port: process.env.NODE_ENV !== 'production' ? 5000 : 443,
   });
 
   server.route({
