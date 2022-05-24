@@ -17,6 +17,8 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "@hapi/hapi": "^20.2.1"
+    "@hapi/hapi": "^20.2.1",
+    "dotenv": "^16.0.1",
+    "mysql": "^2.18.1"
   }
 }
