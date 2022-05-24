@@ -10,6 +10,7 @@ const AboutValidator = require('./src/validator/about');
 // skills
 const skills = require('./src/api/skills');
 const SkillsService = require('./src/service/mysql/SkillsService');
+const SkillsValidator = require('./src/validator/skills');
 
 const init = async () => {
   const aboutService = new AboutService();
@@ -39,6 +40,7 @@ const init = async () => {
       plugin: skills,
       options: {
         service: skillsService,
+        validator: SkillsValidator,
       },
     },
   ]);
