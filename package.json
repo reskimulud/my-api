@@ -19,6 +19,8 @@
   "dependencies": {
     "@hapi/hapi": "^20.2.1",
     "dotenv": "^16.0.1",
-    "mysql": "^2.18.1"
+    "joi": "^17.6.0",
+    "mysql": "^2.18.1",
+    "nanoid": "^3.3.4"
   }
 }
