@@ -14,6 +14,16 @@ const routes = (handler) => [
     path: '/skills',
     handler: handler.postSkill,
   },
+  {
+    method: 'PUT',
+    path: '/skills/{id}',
+    handler: handler.putSkill,
+  },
+  {
+    method: 'DELETE',
+    path: '/skills/{id}',
+    handler: handler.deleteSkill,
+  },
 ];
 
 module.exports = routes;
