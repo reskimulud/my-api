@@ -12,14 +12,19 @@ const skills = require('./src/api/skills');
 const SkillsService = require('./src/service/mysql/SkillsService');
 const SkillsValidator = require('./src/validator/skills');
 
+// experiences
+const experiences = require('./src/api/experiences');
+const ExperiencesService = require('./src/service/mysql/ExperiencesService');
+
 const init = async () => {
   const aboutService = new AboutService();
   const skillsService = new SkillsService();
+  const experiencesService = new ExperiencesService();
 
   const server = Hapi.server({
     host: process.env.NODE_ENV !== 'production' ?
-    'localhost' :
-    'api.reskimulud.my.id',
+      'localhost' :
+      'api.reskimulud.my.id',
     port: process.env.NODE_ENV !== 'production' ? 5000 : 443,
     routes: {
       cors: {
@@ -41,6 +46,12 @@ const init = async () => {
       options: {
         service: skillsService,
         validator: SkillsValidator,
+      },
+    },
+    {
+      plugin: experiences,
+      options: {
+        service: experiencesService,
       },
     },
   ]);
