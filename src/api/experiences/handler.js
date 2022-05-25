@@ -1,8 +1,10 @@
 class ExperiencesHandler {
   #service;
+  #validator;
 
-  constructor(service) {
+  constructor(service, validator) {
     this.#service = service;
+    this.#validator = validator;
 
     this.getExperiences = this.getExperiences.bind(this);
   }
