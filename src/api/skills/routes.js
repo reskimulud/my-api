@@ -5,11 +5,6 @@ const routes = (handler) => [
     handler: handler.getSkills,
   },
   {
-    method: 'GET',
-    path: '/skills/categories',
-    handler: handler.getCategories,
-  },
-  {
     method: 'POST',
     path: '/skills',
     handler: handler.postSkill,
@@ -23,6 +18,26 @@ const routes = (handler) => [
     method: 'DELETE',
     path: '/skills/{id}',
     handler: handler.deleteSkill,
+  },
+  {
+    method: 'GET',
+    path: '/skills/categories',
+    handler: handler.getCategories,
+  },
+  {
+    method: 'POST',
+    path: '/skills/categories',
+    handler: handler.postCategory,
+  },
+  {
+    method: 'PUT',
+    path: '/skills/categories/{id}',
+    handler: handler.putCategory,
+  },
+  {
+    method: 'DELETE',
+    path: '/skills/categories/{id}',
+    handler: handler.deleteCategory,
   },
 ];
 

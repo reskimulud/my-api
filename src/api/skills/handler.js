@@ -11,7 +11,11 @@ class SkillsHandler {
     this.postSkill = this.postSkill.bind(this);
     this.putSkill = this.putSkill.bind(this);
     this.deleteSkill = this.deleteSkill.bind(this);
+
     this.getCategories = this.getCategories.bind(this);
+    this.postCategory = this.postCategory.bind(this);
+    this.putCategory = this.putCategory.bind(this);
+    this.deleteCategory = this.deleteCategory.bind(this);
   }
 
   async getSkills(request, h) {
@@ -29,7 +33,7 @@ class SkillsHandler {
   async postSkill(request, h) {
     try {
       this.#validator.validateSkillsPayload(request.payload);
-      const {skill, percentage, category_id} = request.payload;
+      const { skill, percentage, category_id } = request.payload;
 
       const result = await this.#service.addSkill({
         skill,
@@ -54,8 +58,8 @@ class SkillsHandler {
   async putSkill(request, h) {
     try {
       this.#validator.validateSkillsPayload(request.payload);
-      const {id} = request.params;
-      const {skill, percentage, category_id} = request.payload;
+      const { id } = request.params;
+      const { skill, percentage, category_id } = request.payload;
 
       await this.#service.updateSkillById(id, {
         skill,
@@ -74,7 +78,7 @@ class SkillsHandler {
 
   async deleteSkill(request, h) {
     try {
-      const {id} = request.params;
+      const { id } = request.params;
 
       await this.#service.deleteSkillById(id);
 
@@ -97,6 +101,66 @@ class SkillsHandler {
         categories,
       },
     };
+  }
+
+  async postCategory(request, h) {
+    try {
+      this.#validator.validateSkillsCategoryPayload(request.payload);
+      const { category_name, position } = request.payload;
+
+      const result = await this.#service.addCategory({
+        category_name,
+        position,
+      });
+
+      const response = h.response({
+        status: 'success',
+        message: 'Category added successfully',
+        data: {
+          id: result.insertId,
+        },
+      });
+      response.code(201);
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async putCategory(request, h) {
+    try {
+      this.#validator.validateSkillsCategoryPayload(request.payload);
+      const { id } = request.params;
+
+      const { category_name, position } = request.payload;
+
+      await this.#service.updateCategoryById(id, {
+        category_name,
+        position,
+      });
+
+      return {
+        status: 'success',
+        message: 'Category updated successfully',
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async deleteCategory(request, h) {
+    try {
+      const { id } = request.params;
+
+      await this.#service.deleteCategoryById(id);
+
+      return {
+        status: 'success',
+        message: 'Category deleted successfully',
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 

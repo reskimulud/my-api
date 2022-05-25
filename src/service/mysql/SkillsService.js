@@ -47,16 +47,16 @@ class SkillsService {
     return await this.#pool.query('SELECT * FROM about_skills_category');
   }
 
-  async addCategory({categoryName, position}) {
+  async addCategory({category_name, position}) {
     const query = `INSERT INTO about_skills_category (category_name, position)
-      VALUES ('${categoryName}', ${position})`;
+      VALUES ('${category_name}', ${position})`;
 
     return await this.#pool.query(query);
   }
 
-  async updateCategoryById(id, {categoryName, position}) {
+  async updateCategoryById(id, {category_name, position}) {
     const query = `UPDATE about_skills_category
-      SET category_name = '${categoryName}',
+      SET category_name = '${category_name}',
       position = ${position}
       WHERE id = ${id}`;
 
