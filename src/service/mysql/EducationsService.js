@@ -18,16 +18,16 @@ class EducationsService {
     school,
     start,
     until,
-    is_graduate,
+    is_graduated,
     description,
   }) {
     const query = `INSERT INTO about_education
-      (degree, school, start, until, is_graduate, description)
+      (degree, school, start, until, is_graduated, description)
       VALUES ('${degree}',
         '${school}',
         '${start}',
         '${until}',
-        ${is_graduate},
+        ${is_graduated},
         '${description}'
       )`;
 
@@ -39,7 +39,7 @@ class EducationsService {
     school,
     start,
     until,
-    is_graduate,
+    is_graduated,
     description,
   }) {
     const query = `UPDATE about_education
@@ -47,7 +47,7 @@ class EducationsService {
       school = '${school}',
       start = '${start}',
       until = '${until}',
-      is_graduate = ${is_graduate},
+      is_graduated = ${is_graduated},
       description = '${description}'
       WHERE id = ${id}`;
 

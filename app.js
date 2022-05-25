@@ -17,10 +17,16 @@ const experiences = require('./src/api/experiences');
 const ExperiencesService = require('./src/service/mysql/ExperiencesService');
 const ExperiencesValidator = require('./src/validator/experiences');
 
+// educations
+const educations = require('./src/api/educations');
+const EducationsService = require('./src/service/mysql/EducationsService');
+const EducationsValidator = require('./src/validator/educations');
+
 const init = async () => {
   const aboutService = new AboutService();
   const skillsService = new SkillsService();
   const experiencesService = new ExperiencesService();
+  const educationsService = new EducationsService();
 
   const server = Hapi.server({
     host: process.env.NODE_ENV !== 'production' ?
@@ -54,6 +60,13 @@ const init = async () => {
       options: {
         service: experiencesService,
         validator: ExperiencesValidator,
+      },
+    },
+    {
+      plugin: educations,
+      options: {
+        service: educationsService,
+        validator: EducationsValidator,
       },
     },
   ]);
