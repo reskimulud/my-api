@@ -9,6 +9,16 @@ const routes = (handler) => [
     path: '/educations',
     handler: handler.postEducation,
   },
+  {
+    method: 'PUT',
+    path: '/educations/{id}',
+    handler: handler.putEducation,
+  },
+  {
+    method: 'DELETE',
+    path: '/educations/{id}',
+    handler: handler.deleteEducation,
+  },
 ];
 
 module.exports = routes;
