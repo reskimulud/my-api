@@ -1,6 +1,8 @@
 require('dotenv').config();
 
 const Hapi = require('@hapi/hapi');
+const path = require('path');
+const Inert = require('@hapi/inert');
 
 // about
 const about = require('./src/api/about');
@@ -36,6 +38,21 @@ const init = async () => {
     routes: {
       cors: {
         origin: ['*'],
+      },
+    },
+  });
+
+  await server.register([
+    { plugin: Inert },
+  ]);
+
+  server.route({
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+      directory: {
+        path: path.resolve(__dirname, 'src/public'),
+        index: ['index.html'],
       },
     },
   });
