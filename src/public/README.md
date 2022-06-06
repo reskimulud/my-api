@@ -4,8 +4,10 @@
 
 Base URL : https://api.reskimulud.my.id
 
-## About
-### GET - Get all data About
+---
+
+# About
+## GET - Get all data About
 > Get about me
   * URL : `/about`
   * Response : `JSON`
@@ -21,7 +23,7 @@ Base URL : https://api.reskimulud.my.id
   }
 }
 ```
-### PUT - Update About
+## PUT - Update About
 > Update about me
   * URL : `/about/{id}`
   * Request Body : `JSON`
@@ -39,6 +41,7 @@ Base URL : https://api.reskimulud.my.id
     * `linkedin` : `String`
     * `image` : `String`, **required**
   * Response : `JSON`
+
 ```json
 {
   "status": "success",
@@ -46,8 +49,10 @@ Base URL : https://api.reskimulud.my.id
 }
 ```
 
-## Skills
-### GET - Get all data Skills
+---
+
+# Skills
+## GET - Get all data Skills
 > Get all skills
   * URL : `/skills`
   * Response : `JSON`
@@ -77,7 +82,7 @@ Base URL : https://api.reskimulud.my.id
 }
 ```
 
-### POST - Add skill
+## POST - Add skill
 > Add a new data skill to backend
   * URL: `/skills`
   * Request Body: `JSON`
@@ -85,17 +90,18 @@ Base URL : https://api.reskimulud.my.id
     * `percentage`: `Int`, **required**
     * `category_id`: `Int`, **required**
   * Response: `JSON`
-  ```json
-  {
-    "status": "success",
-    "message": "Skill added successfully",
-    "data": {
-      "id": 1
-    }
+
+```json
+{
+  "status": "success",
+  "message": "Skill added successfully",
+  "data": {
+    "id": 1
   }
+}
   ```
 
-### PUT - Update Skill
+## PUT - Update Skill
 > Update data skill by id
   * URL: `/skills/{id}`
   * Request Body: `JSON`
@@ -103,23 +109,52 @@ Base URL : https://api.reskimulud.my.id
     * `percentage`: `Int`, **required**
     * `category_id`: `Int`, **required**
   * Response: `JSON`
-  ```json
-  {
-    "status": "success",
-    "message": "Skill updated successfully"
-  }
-  ```
 
-### DELETE - Delete Skill
+```json
+{
+  "status": "success",
+  "message": "Skill updated successfully"
+}
+```
+
+## DELETE - Delete Skill
 > Delete data skill by id
   * URL: `/skills/{id}`
   * Request Body: `JSON`
   * Response: `JSON`
-  ```json
-  {
-    "status": "success",
-    "message": "Skill deleted successfully"
-  }
-  ```
 
-## Educations
+```json
+{
+  "status": "success",
+  "message": "Skill deleted successfully"
+}
+```
+
+---
+
+# Educations
+
+## GET - Get all data Educations
+  * URL: `/educations`
+  * Response: `JSON`
+
+```json
+{
+  "status": "success",
+  "message": "Educations data retrieved successfully",
+  "data": {
+    "educations": [
+      {
+        "id": 2,
+        "degree": "Sekolah Menengah Atas",
+        "school": "SMA Negeri 5 Kota Sukabumi",
+        "start": 1464732000,
+        "until": 1556661600,
+        "is_graduated": 1,
+        "description": "Lorem ipsum"
+      },
+      ...
+    ]
+  }
+}
+```
