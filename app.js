@@ -3,6 +3,7 @@ require('dotenv').config();
 const Hapi = require('@hapi/hapi');
 const path = require('path');
 const Inert = require('@hapi/inert');
+const Jwt = require('@hapi/jwt');
 
 // about
 const about = require('./src/api/about');
@@ -43,8 +44,24 @@ const init = async () => {
   });
 
   await server.register([
-    { plugin: Inert },
+    { plugin: Inert }, { plugin: Jwt },
   ]);
+
+  // defines strategy authentications
+  server.auth.strategy('reskimulud_jwt', 'jwt', {
+    keys: process.env.ACCESS_TOKEN_KEY,
+    verify: {
+      aud: false,
+      iss: false,
+      sub: false,
+    },
+    validate: (artifacts) => ({
+      isValid: true,
+      credentials: {
+        id: artifacts.decoded.payload.id,
+      },
+    }),
+  });
 
   server.route({
     method: 'GET',
