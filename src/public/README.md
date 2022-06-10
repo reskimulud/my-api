@@ -158,3 +158,133 @@ Base URL : https://api.reskimulud.my.id
   }
 }
 ```
+
+## POST - Add education
+> Add new education data to backend
+  * URL: `/educations`
+  * Request Body: `JSON`
+    * `degree`: `String`, **required**
+    * `school`: `String`, **required**
+    * `start`: `Int`, **required**
+    * `until`: `Int`, **required**
+    * `is_graduated`: `Int`, **required**
+    * `description`: `String`
+  * Response: `JSON`
+
+```json
+{
+  "status": "success",
+  "message": "Education added successfully",
+  "data": {
+    "id": 2
+  }
+}
+  ```
+
+## PUT - Update education
+> Update education data by id
+  * URL: `/educations/{id}`
+  * Request Body: `JSON`
+    * `degree`: `String`, **required**
+    * `school`: `String`, **required**
+    * `start`: `Int`, **required**
+    * `until`: `Int`, **required**
+    * `is_graduated`: `Int`, **required**
+    * `description`: `String`
+  * Response: `JSON`
+
+```json
+{
+  "status": "success",
+  "message": "Education updated successfully"
+}
+```
+
+## DELETE - Delete education
+> Delete education data by id
+  * URL: `/educations/{id}`
+  * Request Body: `JSON`
+  * Response: `JSON`
+
+```json
+{
+  "status": "success",
+  "message": "Education deleted successfully"
+}
+```
+
+---
+
+# Services
+
+## GET - Get all data Services
+  * URL: `/services`
+  * Response: `JSON`
+
+```json
+{
+  "status": "success",
+  "message": "Services data retrieved successfully",
+  "data": {
+    "services": [
+      {
+        "id": 1,
+        "name": "Web Development",
+        "description": "Lorem ipsum",
+        "icon": "fa fa-laptop"
+      },
+      ...
+    ]
+  }
+}
+```
+
+## POST - Add service
+> Add new service data to backend
+  * URL: `/services`
+  * Request Body: `JSON`
+    * `name`: `String`, **required**
+    * `description`: `String`
+    * `icon`: `String`, **required**
+  * Response: `JSON`
+
+```json
+{
+  "status": "success",
+  "message": "Service added successfully",
+  "data": {
+    "id": 1
+  }
+}
+  ```
+
+## PUT - Update service
+> Update service data by id
+  * URL: `/services/{id}`
+  * Request Body: `JSON`
+    * `name`: `String`, **required**
+    * `description`: `String`
+    * `icon`: `String`, **required**
+  * Response: `JSON`
+
+```json
+{
+  "status": "success",
+  "message": "Service updated successfully"
+}
+```
+
+## DELETE - Delete service
+> Delete service data by id
+  * URL: `/services/{id}`
+  * Request Body: `JSON`
+  * Response: `JSON`
+
+```json
+{
+  "status": "success",
+  "message": "Service deleted successfully"
+}
+```
+
+---
