@@ -4,6 +4,10 @@
 
 Base URL : https://api.reskimulud.my.id
 
+To retrieve the data, need a token for authorization.
+  * Authorization : `Bearer <token>`
+  > Token is private and can only be used by the owner
+
 ---
 
 # About
@@ -127,6 +131,89 @@ Base URL : https://api.reskimulud.my.id
 {
   "status": "success",
   "message": "Skill deleted successfully"
+}
+```
+
+---
+
+# Experiences
+
+## GET - Get all data Experiences
+> Get all experiences
+  * URL: `/experiences`
+  * Response: `JSON`
+```json
+{
+  "status": "success",
+  "message": "Experiences data retrieved successfully",
+  "data": {
+    "experiences": [
+      {
+        "id": 7,
+        "job_title": "Leader",
+        "company_name": "Google Developer Student Clubs UMMI",
+        "type": "Freelance",
+        "start": 1627776000,
+        "until": 0,
+        "is_resigned": 0,
+        "description": "<p>As a Google Developer Student Clubs Lead (GDSC Lead) on chapter Universitas Muhammadiyah Sukabumi</p>\r\n"
+      },
+      ...
+    ]
+  }
+}
+```
+
+## POST - Add experience
+> Add new experience data to backend
+  * URL: `/experiences`
+  * Request Body: `JSON`
+    * `job_title`: `String`, **required**
+    * `company_name`: `String`, **required**
+    * `type`: `String`, **required**
+    * `start`: `Int`, **required**
+    * `until`: `Int`, **required**
+    * `is_resigned`: `Int`, **required**
+    * `description`: `String`
+  * Response: `JSON`
+```json
+{
+  "status": "success",
+  "message": "Experience added successfully",
+  "data": {
+    "id": 7
+  }
+}
+```
+
+## PUT - Update experience
+> Update experience data by id
+  * URL: `/experiences/{id}`
+  * Request Body: `JSON`
+    * `job_title`: `String`, **required**
+    * `company_name`: `String`, **required**
+    * `type`: `String`, **required**
+    * `start`: `Int`, **required**
+    * `until`: `Int`, **required**
+    * `is_resigned`: `Int`, **required**
+    * `description`: `String`
+  * Response: `JSON`
+```json
+{
+  "status": "success",
+  "message": "Experience updated successfully"
+}
+```
+
+## DELETE - Delete experience
+> Delete experience data by id
+  * URL: `/experiences/{id}`
+  * Request Body: `JSON`
+  * Response: `JSON`
+```json
+{
+  "status": "success",
+  "message": "Experience deleted successfully"
 }
 ```
 
