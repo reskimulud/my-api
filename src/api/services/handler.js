@@ -24,11 +24,58 @@ class ServicesHandler {
     };
   }
 
-  async putServices(request, h) {}
+  async putServices(request, h) {
+    try {
+      this.#validator.validateServicePayload(request.payload);
+      const { id } = request.params;
+      const { name, description, icon } = request.payload;
 
-  async postServices(request, h) {}
+      await this.#service.updateServices(id, { name, description, icon });
 
-  async deleteServices(request, h) {}
+      return {
+        status: 'success',
+        message: 'Service updated successfully',
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async postServices(request, h) {
+    try {
+      this.#validator.validateServicePayload(request.payload);
+      const { name, description, icon } = request.payload;
+
+      const result = await this.#service.addServices(name, description, icon);
+
+      const response = h.response({
+        status: 'success',
+        message: 'Service added successfully',
+        data: {
+          id: result.insertId,
+        },
+      });
+      response.code(201);
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async deleteServices(request, h) {
+    try {
+      const { id } = request.params;
+
+      await this.#service.deleteServices(id);
+
+      return {
+        status: 'success',
+        message: 'Service deleted successfully',
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 module.exports = ServicesHandler;
