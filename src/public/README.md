@@ -142,6 +142,7 @@ To retrieve the data, need a token for authorization.
 > Get all experiences
   * URL: `/experiences`
   * Response: `JSON`
+
 ```json
 {
   "status": "success",
@@ -176,6 +177,7 @@ To retrieve the data, need a token for authorization.
     * `is_resigned`: `Int`, **required**
     * `description`: `String`
   * Response: `JSON`
+
 ```json
 {
   "status": "success",
@@ -198,6 +200,7 @@ To retrieve the data, need a token for authorization.
     * `is_resigned`: `Int`, **required**
     * `description`: `String`
   * Response: `JSON`
+
 ```json
 {
   "status": "success",
@@ -210,6 +213,7 @@ To retrieve the data, need a token for authorization.
   * URL: `/experiences/{id}`
   * Request Body: `JSON`
   * Response: `JSON`
+
 ```json
 {
   "status": "success",
