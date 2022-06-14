@@ -14,100 +14,84 @@ class EducationsHandler {
   }
 
   async getEducations(request, h) {
-    try {
-      const educations = await this.#service.getEducations();
+    const educations = await this.#service.getEducations();
 
-      return {
-        status: 'success',
-        message: 'Educations data retrieved successfully',
-        data: {
-          educations,
-        },
-      };
-    } catch (err) {
-      console.log(err);
-    }
+    return {
+      status: 'success',
+      message: 'Educations data retrieved successfully',
+      data: {
+        educations,
+      },
+    };
   }
 
   async postEducation(request, h) {
-    try {
-      this.#validator.validateEducationsPayload(request.payload);
-      const {
-        degree,
-        school,
-        start,
-        until,
-        is_graduated,
-        description,
-      } = request.payload;
+    this.#validator.validateEducationsPayload(request.payload);
+    const {
+      degree,
+      school,
+      start,
+      until,
+      is_graduated,
+      description,
+    } = request.payload;
 
-      const result = await this.#service.addEducation({
-        degree,
-        school,
-        start,
-        until,
-        is_graduated,
-        description,
-      });
+    const result = await this.#service.addEducation({
+      degree,
+      school,
+      start,
+      until,
+      is_graduated,
+      description,
+    });
 
-      const response = h.response({
-        status: 'success',
-        message: 'Education added successfully',
-        data: {
-          id: result.insertId,
-        },
-      });
+    const response = h.response({
+      status: 'success',
+      message: 'Education added successfully',
+      data: {
+        id: result.insertId,
+      },
+    });
 
-      return response;
-    } catch (err) {
-      console.log(err);
-    }
+    return response;
   }
 
   async putEducation(request, h) {
-    try {
-      this.#validator.validateEducationsPayload(request.payload);
-      const { id } = request.params;
-      const {
-        degree,
-        school,
-        start,
-        until,
-        is_graduated,
-        description,
-      } = request.payload;
+    this.#validator.validateEducationsPayload(request.payload);
+    const { id } = request.params;
+    const {
+      degree,
+      school,
+      start,
+      until,
+      is_graduated,
+      description,
+    } = request.payload;
 
-      await this.#service.updateEducationById(id, {
-        degree,
-        school,
-        start,
-        until,
-        is_graduated,
-        description,
-      });
+    await this.#service.updateEducationById(id, {
+      degree,
+      school,
+      start,
+      until,
+      is_graduated,
+      description,
+    });
 
-      return {
-        status: 'success',
-        message: 'Education updated successfully',
-      };
-    } catch (err) {
-      console.log(err);
-    }
+    return {
+      status: 'success',
+      message: 'Education updated successfully',
+    };
   }
 
   async deleteEducation(request, h) {
-    try {
-      const { id } = request.params;
+    const { id } = request.params;
 
-      await this.#service.deleteEducationById(id);
+    await this.#service.deleteEducationById(id);
 
-      return {
-        status: 'success',
-        message: 'Education deleted successfully',
-      };
-    } catch (err) {
-      console.log(err);
-    }
+    return {
+      status: 'success',
+      message: 'Education deleted successfully',
+    };
   }
 }
 

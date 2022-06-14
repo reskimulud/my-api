@@ -25,19 +25,15 @@ class AboutHandler {
   }
 
   async putAbout(request, h) {
-    try {
-      this.#validator.validateAlbumPayload(request.payload);
-      const {id} = request.params;
+    this.#validator.validateAlbumPayload(request.payload);
+    const {id} = request.params;
 
-      await this.#service.updateAbout(id, request.payload);
+    await this.#service.updateAbout(id, request.payload);
 
-      return {
-        status: 'success',
-        message: 'About data updated successfully',
-      };
-    } catch (err) {
-      console.log(err);
-    }
+    return {
+      status: 'success',
+      message: 'About data updated successfully',
+    };
   }
 }
 

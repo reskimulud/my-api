@@ -5,6 +5,8 @@ const path = require('path');
 const Inert = require('@hapi/inert');
 const Jwt = require('@hapi/jwt');
 
+const ClientError = require('./src/exception/ClientError');
+
 // about
 const about = require('./src/api/about');
 const AboutService = require('./src/service/mysql/AboutService');
@@ -117,6 +119,22 @@ const init = async () => {
       },
     },
   ]);
+
+  // extension
+  server.ext('onPreResponse', (request, h) => {
+    const {response} = request;
+
+    if (response instanceof ClientError) {
+      const newResponse = h.response({
+        status: 'fail',
+        message: response.message,
+      });
+      newResponse.code(response.statusCode);
+      return newResponse;
+    }
+
+    return h.continue;
+  });
 
   await server.start();
   console.log(`Server running at ${server.info.uri}`);

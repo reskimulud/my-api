@@ -31,64 +31,52 @@ class SkillsHandler {
   }
 
   async postSkill(request, h) {
-    try {
-      this.#validator.validateSkillsPayload(request.payload);
-      const { skill, percentage, category_id } = request.payload;
+    this.#validator.validateSkillsPayload(request.payload);
+    const { skill, percentage, category_id } = request.payload;
 
-      const result = await this.#service.addSkill({
-        skill,
-        percentage,
-        category_id,
-      });
+    const result = await this.#service.addSkill({
+      skill,
+      percentage,
+      category_id,
+    });
 
-      const response = h.response({
-        status: 'success',
-        message: 'Skill added successfully',
-        data: {
-          id: result.insertId,
-        },
-      });
-      response.code(201);
-      return response;
-    } catch (err) {
-      console.log(err);
-    }
+    const response = h.response({
+      status: 'success',
+      message: 'Skill added successfully',
+      data: {
+        id: result.insertId,
+      },
+    });
+    response.code(201);
+    return response;
   }
 
   async putSkill(request, h) {
-    try {
-      this.#validator.validateSkillsPayload(request.payload);
-      const { id } = request.params;
-      const { skill, percentage, category_id } = request.payload;
+    this.#validator.validateSkillsPayload(request.payload);
+    const { id } = request.params;
+    const { skill, percentage, category_id } = request.payload;
 
-      await this.#service.updateSkillById(id, {
-        skill,
-        percentage,
-        category_id,
-      });
+    await this.#service.updateSkillById(id, {
+      skill,
+      percentage,
+      category_id,
+    });
 
-      return {
-        status: 'success',
-        message: 'Skill updated successfully',
-      };
-    } catch (err) {
-      console.log(err);
-    }
+    return {
+      status: 'success',
+      message: 'Skill updated successfully',
+    };
   }
 
   async deleteSkill(request, h) {
-    try {
-      const { id } = request.params;
+    const { id } = request.params;
 
-      await this.#service.deleteSkillById(id);
+    await this.#service.deleteSkillById(id);
 
-      return {
-        status: 'success',
-        message: 'Skill deleted successfully',
-      };
-    } catch (err) {
-      console.log(err);
-    }
+    return {
+      status: 'success',
+      message: 'Skill deleted successfully',
+    };
   }
 
   async getCategories(request, h) {
@@ -104,63 +92,51 @@ class SkillsHandler {
   }
 
   async postCategory(request, h) {
-    try {
-      this.#validator.validateSkillsCategoryPayload(request.payload);
-      const { category_name, position } = request.payload;
+    this.#validator.validateSkillsCategoryPayload(request.payload);
+    const { category_name, position } = request.payload;
 
-      const result = await this.#service.addCategory({
-        category_name,
-        position,
-      });
+    const result = await this.#service.addCategory({
+      category_name,
+      position,
+    });
 
-      const response = h.response({
-        status: 'success',
-        message: 'Category added successfully',
-        data: {
-          id: result.insertId,
-        },
-      });
-      response.code(201);
-      return response;
-    } catch (err) {
-      console.log(err);
-    }
+    const response = h.response({
+      status: 'success',
+      message: 'Category added successfully',
+      data: {
+        id: result.insertId,
+      },
+    });
+    response.code(201);
+    return response;
   }
 
   async putCategory(request, h) {
-    try {
-      this.#validator.validateSkillsCategoryPayload(request.payload);
-      const { id } = request.params;
+    this.#validator.validateSkillsCategoryPayload(request.payload);
+    const { id } = request.params;
 
-      const { category_name, position } = request.payload;
+    const { category_name, position } = request.payload;
 
-      await this.#service.updateCategoryById(id, {
-        category_name,
-        position,
-      });
+    await this.#service.updateCategoryById(id, {
+      category_name,
+      position,
+    });
 
-      return {
-        status: 'success',
-        message: 'Category updated successfully',
-      };
-    } catch (err) {
-      console.log(err);
-    }
+    return {
+      status: 'success',
+      message: 'Category updated successfully',
+    };
   }
 
   async deleteCategory(request, h) {
-    try {
-      const { id } = request.params;
+    const { id } = request.params;
 
-      await this.#service.deleteCategoryById(id);
+    await this.#service.deleteCategoryById(id);
 
-      return {
-        status: 'success',
-        message: 'Category deleted successfully',
-      };
-    } catch (err) {
-      console.log(err);
-    }
+    return {
+      status: 'success',
+      message: 'Category deleted successfully',
+    };
   }
 }
 
