@@ -13,7 +13,6 @@ class AboutHandler {
   async getAbout(request, h) {
     this.#validator.validateAlbumPayload(request.payload);
     const about = await this.#service.getAbout();
-    console.log(about);
 
     return {
       status: 'success',

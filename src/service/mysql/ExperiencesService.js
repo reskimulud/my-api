@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 const Pool = require('../../conf/PoolMysql');
+const InvariantError = require('../../exception/InvariantError');
+const NotFoundError = require('../../exception/NotFoundError');
 
 class ExperiencesService {
   #pool;
@@ -33,7 +35,13 @@ class ExperiencesService {
         '${description}'
       )`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new InvariantError('Can\'t add experience data');
+    }
+
+    return result;
   }
 
   async updateExperienceById(id, {
@@ -55,13 +63,25 @@ class ExperiencesService {
       description = '${description}'
       WHERE id = ${id}`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Experience data not found');
+    }
+
+    return result;
   }
 
   async deleteExperienceById(id) {
     const query = `DELETE FROM about_experience WHERE id = ${id}`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Experience data not found');
+    }
+
+    return result;
   }
 }
 

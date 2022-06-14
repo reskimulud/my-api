@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 const Pool = require('../../conf/PoolMysql');
+const InvariantError = require('../../exception/InvariantError');
+const NotFoundError = require('../../exception/NotFoundError');
 
 class EducationsService {
   #pool;
@@ -31,7 +33,13 @@ class EducationsService {
         '${description}'
       )`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new InvariantError('Can\'t add education data');
+    }
+
+    return result;
   }
 
   async updateEducationById(id, {
@@ -51,12 +59,24 @@ class EducationsService {
       description = '${description}'
       WHERE id = ${id}`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Education data not found');
+    }
+
+    return result;
   }
 
   async deleteEducationById(id) {
     const query = `DELETE FROM about_education WHERE id = ${id}`;
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Education data not found');
+    }
+
+    return result;
   }
 }
 

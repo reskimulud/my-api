@@ -1,4 +1,6 @@
 const Pool = require('../../conf/PoolMysql');
+const InvariantError = require('../../exception/InvariantError');
+const NotFoundError = require('../../exception/NotFoundError');
 
 class ServicesService {
   #pool;
@@ -18,20 +20,38 @@ class ServicesService {
       icon = '${icon}'
       WHERE id = ${id}`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Can\'t update services data, not found');
+    }
+
+    return result;
   }
 
   async addServices(name, description, icon) {
     const query = `INSERT INTO services (name, description, icon)
       VALUES ('${name}', '${description}', '${icon}')`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new InvariantError('Can\'t add services data');
+    }
+
+    return result;
   }
 
   async deleteServices(id) {
     const query = `DELETE FROM services WHERE id = ${id}`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Can\'t delete services data, not found');
+    }
+
+    return result;
   }
 }
 

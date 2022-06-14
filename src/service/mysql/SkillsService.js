@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 const Pool = require('../../conf/PoolMysql');
+const InvariantError = require('../../exception/InvariantError');
+const NotFoundError = require('../../exception/NotFoundError');
 
 class SkillsService {
   #pool;
@@ -25,7 +27,13 @@ class SkillsService {
     const query = `INSERT INTO about_skills (skill, percentage, category_id)
       VALUES ('${skill}', ${percentage}, ${category_id})`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new InvariantError('Can\'t add skill data');
+    }
+
+    return result;
   }
 
   async updateSkillById(id, {skill, percentage, category_id}) {
@@ -34,13 +42,25 @@ class SkillsService {
       category_id = ${category_id}
       WHERE id = ${id}`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Can\'t update skill data, skill not found');
+    }
+
+    return result;
   }
 
   async deleteSkillById(id) {
     const query = `DELETE FROM about_skills WHERE id = ${id}`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Can\'t delete skill data, skill not found');
+    }
+
+    return result;
   }
 
   async getCategories() {
@@ -51,7 +71,13 @@ class SkillsService {
     const query = `INSERT INTO about_skills_category (category_name, position)
       VALUES ('${category_name}', ${position})`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new InvariantError('Can\'t add category data');
+    }
+
+    return result;
   }
 
   async updateCategoryById(id, {category_name, position}) {
@@ -60,13 +86,21 @@ class SkillsService {
       position = ${position}
       WHERE id = ${id}`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('C]ategory data not found');
+    }
   }
 
   async deleteCategoryById(id) {
     const query = `DELETE FROM about_skills_category WHERE id = ${id}`;
 
-    return await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Category data not found');
+    }
   }
 }
 

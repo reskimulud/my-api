@@ -1,4 +1,5 @@
 const Pool = require('../../conf/PoolMysql');
+const NotFoundError = require('../../exception/NotFoundError');
 
 class AboutService {
   #pool;
@@ -44,7 +45,10 @@ class AboutService {
 
     console.log(query);
 
-    await this.#pool.query(query);
+    const result = await this.#pool.query(query);
+    if (!result || result.size < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('About data not found');
+    }
   }
 }
 
