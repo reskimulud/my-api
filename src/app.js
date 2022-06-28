@@ -5,32 +5,32 @@ const path = require('path');
 const Inert = require('@hapi/inert');
 const Jwt = require('@hapi/jwt');
 
-const ClientError = require('./src/exception/ClientError');
+const ClientError = require('./exception/ClientError');
 
 // about
-const about = require('./src/api/about');
-const AboutService = require('./src/service/mysql/AboutService');
-const AboutValidator = require('./src/validator/about');
+const about = require('./api/about');
+const AboutService = require('./service/mysql/AboutService');
+const AboutValidator = require('./validator/about');
 
 // skills
-const skills = require('./src/api/skills');
-const SkillsService = require('./src/service/mysql/SkillsService');
-const SkillsValidator = require('./src/validator/skills');
+const skills = require('./api/skills');
+const SkillsService = require('./service/mysql/SkillsService');
+const SkillsValidator = require('./validator/skills');
 
 // experiences
-const experiences = require('./src/api/experiences');
-const ExperiencesService = require('./src/service/mysql/ExperiencesService');
-const ExperiencesValidator = require('./src/validator/experiences');
+const experiences = require('./api/experiences');
+const ExperiencesService = require('./service/mysql/ExperiencesService');
+const ExperiencesValidator = require('./validator/experiences');
 
 // educations
-const educations = require('./src/api/educations');
-const EducationsService = require('./src/service/mysql/EducationsService');
-const EducationsValidator = require('./src/validator/educations');
+const educations = require('./api/educations');
+const EducationsService = require('./service/mysql/EducationsService');
+const EducationsValidator = require('./validator/educations');
 
 // services
-const services = require('./src/api/services');
-const ServicesService = require('./src/service/mysql/ServicesService');
-const ServicesValidator = require('./src/validator/services');
+const services = require('./api/services');
+const ServicesService = require('./service/mysql/ServicesService');
+const ServicesValidator = require('./validator/services');
 
 const init = async () => {
   const aboutService = new AboutService();
@@ -76,7 +76,7 @@ const init = async () => {
     path: '/{param*}',
     handler: {
       directory: {
-        path: path.resolve(__dirname, 'src/public'),
+        path: path.resolve(__dirname, 'public'),
         index: ['index.html'],
       },
     },

@@ -4,8 +4,8 @@
   "description": "API for api.reskimulud.my.id",
   "main": "index.js",
   "scripts": {
-    "start-dev": "nodemon app.js",
-    "start-prod": "NODE_ENV=production node app",
+    "start-dev": "nodemon ./src/app.js",
+    "start-prod": "NODE_ENV=production node ./src/app",
     "lint": "eslint ./src"
   },
   "keywords": [],
