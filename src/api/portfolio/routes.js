@@ -7,6 +7,14 @@ const routes = (handler) => [
       auth: 'reskimulud_jwt',
     },
   },
+  {
+    method: 'GET',
+    path: '/portfolio/{id}',
+    handler: handler.getPortfolioById,
+    options: {
+      auth: 'reskimulud_jwt',
+    },
+  },
 ];
 
 module.exports = routes;

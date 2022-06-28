@@ -12,7 +12,13 @@ class PortfolioService {
         'SELECT * FROM portfolio_category',
     );
 
-    const portfolio = await this.#pool.query('SELECT * FROM portfolio');
+    const portfolio = await this.#pool.query(
+        `SELECT id,
+          project_name,
+          category_id
+        FROM portfolio`,
+    );
+    console.log(portfolio);
 
     const gallery = await this.#pool.query('SELECT * FROM portfolio_gallery');
 
@@ -33,6 +39,20 @@ class PortfolioService {
       ));
     });
     return category;
+  }
+
+  async getPortfolioById(id) {
+    const portfolio = await this.#pool.query(`
+      SELECT * FROM portfolio WHERE id = ${id}
+    `);
+
+    const gallery = await this.#pool.query(`
+      SELECT file_name FROM portfolio_gallery WHERE portfolio_id = ${id}
+    `);
+
+    portfolio[0].gallery = gallery;
+
+    return portfolio[0];
   }
 }
 
