@@ -1,3 +1,5 @@
+const path = require('path');
+
 const routes = (handler) => [
   {
     method: 'GET',
@@ -61,6 +63,15 @@ const routes = (handler) => [
     handler: handler.deletePortfolioCategoryById,
     options: {
       auth: 'reskimulud_jwt',
+    },
+  },
+  {
+    method: 'GET',
+    path: '/portfolio/image/{param*}',
+    handler: {
+      directory: {
+        path: path.resolve(__dirname, '../../public/images'),
+      },
     },
   },
 ];
