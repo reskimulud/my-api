@@ -24,12 +24,22 @@ class SkillsService {
   }
 
   async addSkill({skill, percentage, category_id}) {
+    const queryCategory = `
+      SELECT id FROM about_skills_category WHERE id = ${category_id}
+    `;
+
+    const category = await this.#pool.query(queryCategory);
+
+    if (!category || category.length < 1 || category.affectedRows < 1) {
+      throw new InvariantError('Category not found');
+    }
+
     const query = `INSERT INTO about_skills (skill, percentage, category_id)
       VALUES ('${skill}', ${percentage}, ${category_id})`;
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new InvariantError('Can\'t add skill data');
     }
 
@@ -37,6 +47,16 @@ class SkillsService {
   }
 
   async updateSkillById(id, {skill, percentage, category_id}) {
+    const queryCategory = `
+      SELECT id FROM about_skills_category WHERE id = ${category_id}
+    `;
+
+    const category = await this.#pool.query(queryCategory);
+
+    if (!category || category.length < 1 || category.affectedRows < 1) {
+      throw new InvariantError('Category not found');
+    }
+
     const query = `UPDATE about_skills SET skill = '${skill}',
       percentage = ${percentage},
       category_id = ${category_id}
@@ -44,7 +64,7 @@ class SkillsService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('Can\'t update skill data, skill not found');
     }
 
@@ -56,7 +76,7 @@ class SkillsService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('Can\'t delete skill data, skill not found');
     }
 
@@ -73,7 +93,7 @@ class SkillsService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new InvariantError('Can\'t add category data');
     }
 
@@ -88,7 +108,7 @@ class SkillsService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('C]ategory data not found');
     }
   }
@@ -98,7 +118,7 @@ class SkillsService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('Category data not found');
     }
   }

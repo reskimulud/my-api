@@ -37,7 +37,7 @@ class ExperiencesService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new InvariantError('Can\'t add experience data');
     }
 
@@ -65,7 +65,7 @@ class ExperiencesService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('Experience data not found');
     }
 
@@ -77,7 +77,7 @@ class ExperiencesService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('Experience data not found');
     }
 

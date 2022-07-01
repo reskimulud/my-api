@@ -35,7 +35,7 @@ class EducationsService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new InvariantError('Can\'t add education data');
     }
 
@@ -61,7 +61,7 @@ class EducationsService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('Education data not found');
     }
 
@@ -72,7 +72,7 @@ class EducationsService {
     const query = `DELETE FROM about_education WHERE id = ${id}`;
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('Education data not found');
     }
 

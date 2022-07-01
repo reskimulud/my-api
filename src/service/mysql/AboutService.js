@@ -46,7 +46,7 @@ class AboutService {
     console.log(query);
 
     const result = await this.#pool.query(query);
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('About data not found');
     }
   }

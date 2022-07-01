@@ -22,7 +22,7 @@ class ServicesService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('Can\'t update services data, not found');
     }
 
@@ -35,7 +35,7 @@ class ServicesService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new InvariantError('Can\'t add services data');
     }
 
@@ -47,7 +47,7 @@ class ServicesService {
 
     const result = await this.#pool.query(query);
 
-    if (!result || result.size < 1 || result.affectedRows < 1) {
+    if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('Can\'t delete services data, not found');
     }
 
