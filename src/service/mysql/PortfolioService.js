@@ -222,6 +222,19 @@ class PortfolioService {
 
     return result;
   }
+
+  async deletePortfolioImageById(id, fileName) {
+    const query = `
+      DELETE FROM portfolio_gallery 
+      WHERE portfolio_id = ${id} AND file_name = '${fileName}'
+    `;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Portfolio data not found');
+    }
+  }
 }
 
 module.exports = PortfolioService;

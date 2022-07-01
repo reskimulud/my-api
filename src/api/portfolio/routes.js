@@ -88,6 +88,14 @@ const routes = (handler) => [
       auth: 'reskimulud_jwt',
     },
   },
+  {
+    method: 'DELETE',
+    path: '/portfolio/{id}/image/{fileName}',
+    handler: handler.deletePortfolioImageById,
+    options: {
+      auth: 'reskimulud_jwt',
+    },
+  },
 ];
 
 module.exports = routes;

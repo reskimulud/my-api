@@ -24,6 +24,7 @@ class PortfolioHandler {
     // eslint-disable-next-line max-len
     this.deletePortfolioCategoryById = this.deletePortfolioCategoryById.bind(this);
     this.postPortfolioImageById = this.postPortfolioImageById.bind(this);
+    this.deletePortfolioImageById = this.deletePortfolioImageById.bind(this);
   }
 
   async getPortfolio() {
@@ -191,6 +192,18 @@ class PortfolioHandler {
     });
     response.code(201);
     return response;
+  }
+
+  async deletePortfolioImageById(request, h) {
+    const { id, fileName } = request.params;
+    await this.#portfolioService.validatePortfolioId(id);
+    await this.#portfolioService.deletePortfolioImageById(id, fileName);
+    await this.#storageService.deleteFile(fileName);
+
+    return {
+      status: 'success',
+      message: 'Portfolio Image deleted successfully',
+    };
   }
 }
 
