@@ -1,4 +1,7 @@
+/* eslint-disable camelcase */
 const Pool = require('../../conf/PoolMysql');
+const InvariantError = require('../../exception/InvariantError');
+const NotFoundError = require('../../exception/NotFoundError');
 
 class PortfolioService {
   #pool;
@@ -18,7 +21,6 @@ class PortfolioService {
           category_id
         FROM portfolio`,
     );
-    console.log(portfolio);
 
     const gallery = await this.#pool.query('SELECT * FROM portfolio_gallery');
 
@@ -53,6 +55,94 @@ class PortfolioService {
     portfolio[0].gallery = gallery;
 
     return portfolio[0];
+  }
+
+  async addPortfolio({
+    project_name,
+    category_id,
+    project_brief,
+    client,
+    tools,
+    link,
+    date,
+  }) {
+    const queryGetCategoryById = `
+      SELECT id FROM portfolio_category WHERE id = ${category_id}
+    `;
+
+    const category = await this.#pool.query(queryGetCategoryById);
+
+    if (!category || category.length < 1 || category.affectedRows < 1) {
+      throw new InvariantError('Category not found');
+    }
+
+    const query = `INSERT INTO portfolio
+    (project_name, category_id, project_brief, client, tools, link, date)
+    VALUES ('${project_name}',
+      '${category_id}',
+      '${project_brief}',
+      '${client}',
+      '${tools}',
+      '${link}',
+      '${date}')`;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new InvariantError('Can\'t add portfolio data');
+    }
+
+    return result;
+  }
+
+  async updatePortfolioById(id, {
+    project_name,
+    category_id,
+    project_brief,
+    client,
+    tools,
+    link,
+    date,
+  }) {
+    const queryGetCategoryById = `
+      SELECT id FROM portfolio_category WHERE id = ${category_id}
+    `;
+
+    const category = await this.#pool.query(queryGetCategoryById);
+
+    if (!category || category.length < 1 || category.affectedRows < 1) {
+      throw new InvariantError('Category not found');
+    }
+
+    const query = `UPDATE portfolio
+    SET  project_name = '${project_name}',
+      category_id = '${category_id}',
+      project_brief = '${project_brief}',
+      client = '${client}',
+      tools = '${tools}',
+      link = '${link}',
+      date = '${date}'
+    WHERE id = ${id}`;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Portfolio data not found');
+    }
+
+    return result;
+  }
+
+  async deletePortfolioById(id) {
+    const query = `DELETE FROM portfolio WHERE id = ${id}`;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Portfolio data not found');
+    }
+
+    return result;
   }
 }
 

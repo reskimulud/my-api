@@ -37,6 +37,10 @@ const portfolio = require('./api/portfolio');
 const PortfolioService = require('./service/mysql/PortfolioService');
 const PortfolioValidator = require('./validator/portfolio');
 
+// uploads
+const StorageService = require('./service/storage/StorageService');
+const UploadsValidator = require('./validator/uploads');
+
 const init = async () => {
   const aboutService = new AboutService();
   const skillsService = new SkillsService();
@@ -44,6 +48,7 @@ const init = async () => {
   const educationsService = new EducationsService();
   const servicesService = new ServicesService();
   const portfolioService = new PortfolioService();
+  const storageService = new StorageService(__dirname, 'public/images');
 
   const server = Hapi.server({
     host: process.env.NODE_ENV !== 'production' ?
@@ -127,8 +132,10 @@ const init = async () => {
     {
       plugin: portfolio,
       options: {
-        service: portfolioService,
-        validator: PortfolioValidator,
+        portfolioService,
+        storageService,
+        portfolioValidator: PortfolioValidator,
+        uploadsValidator: UploadsValidator,
       },
     },
   ]);

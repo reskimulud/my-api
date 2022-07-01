@@ -7,7 +7,7 @@ const PortfolioPayloadSchema = Joi.object({
   project_brief: Joi.string().allow('', null),
   client: Joi.string().allow('', null),
   tools: Joi.string().allow('', null),
-  link: Joi.link(),
+  link: Joi.string().allow('', null),
   date: Joi.number().required(),
 });
 
