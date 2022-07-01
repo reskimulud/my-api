@@ -74,6 +74,20 @@ const routes = (handler) => [
       },
     },
   },
+  {
+    method: 'POST',
+    path: '/portfolio/{id}/image',
+    handler: handler.postPortfolioImageById,
+    options: {
+      payload: {
+        allow: 'multipart/form-data',
+        multipart: true,
+        output: 'stream',
+        maxBytes: 512000,
+      },
+      auth: 'reskimulud_jwt',
+    },
+  },
 ];
 
 module.exports = routes;

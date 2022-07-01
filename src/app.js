@@ -48,7 +48,8 @@ const init = async () => {
   const educationsService = new EducationsService();
   const servicesService = new ServicesService();
   const portfolioService = new PortfolioService();
-  const storageService = new StorageService(__dirname, 'public/images');
+  // eslint-disable-next-line max-len
+  const storageService = new StorageService(path.resolve(__dirname, 'public/images'));
 
   const server = Hapi.server({
     host: process.env.NODE_ENV !== 'production' ?

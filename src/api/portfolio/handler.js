@@ -23,6 +23,7 @@ class PortfolioHandler {
     this.putPortfolioCategoryById = this.putPortfolioCategoryById.bind(this);
     // eslint-disable-next-line max-len
     this.deletePortfolioCategoryById = this.deletePortfolioCategoryById.bind(this);
+    this.postPortfolioImageById = this.postPortfolioImageById.bind(this);
   }
 
   async getPortfolio() {
@@ -164,6 +165,32 @@ class PortfolioHandler {
       status: 'success',
       message: 'Portfolio Category deleted successfully',
     };
+  }
+
+  async postPortfolioImageById(request, h) {
+    const { image } = request.payload;
+    await this.#uploadsValidator.validateImageHeaders(image.hapi.headers);
+    const { id } = request.params;
+    await this.#portfolioService.validatePortfolioId(id);
+
+    const nameId = `img-porto${id}-${new Date().getTime()}`;
+    const filename = await this.#storageService.writeFile(
+        image,
+        image.hapi,
+        nameId);
+
+    const result = await this.#portfolioService.addPortfolioImage(id, filename);
+
+    const response = h.response({
+      status: 'suceess',
+      message: 'Portfolio Image added successfully',
+      data: {
+        id: result.insertId,
+        filename,
+      },
+    });
+    response.code(201);
+    return response;
   }
 }
 

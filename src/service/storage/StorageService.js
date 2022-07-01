@@ -11,10 +11,10 @@ class StorageService {
     }
   }
 
-  writeFile(file, meta, portoId) {
+  writeFile(file, meta, nameId) {
     const fileExt = meta.filename.split('.').pop();
 
-    const filename = `${portoId}.${fileExt}`;
+    const filename = `${nameId}.${fileExt}`;
     const path = `${this.#folder}/${filename}`;
 
     const fileStream = fs.createWriteStream(path);

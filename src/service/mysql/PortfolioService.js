@@ -10,6 +10,16 @@ class PortfolioService {
     this.#pool = new Pool();
   }
 
+  #imageUrlGenerator(filename) {
+    const host = process.env.HOST;
+    const port = process.env.PORT;
+    if (port === 443) {
+      return `https://${host}/portfolio/image/${filename}`;
+    } else {
+      return `http://${host}:${port}/portfolio/image/${filename}`;
+    }
+  }
+
   async getPortfolio() {
     const category = await this.#pool.query(
         'SELECT * FROM portfolio_category',
@@ -29,7 +39,7 @@ class PortfolioService {
         gal.portfolio_id === item.id
       ))[0];
       if (mGallery) {
-        item.thumb = mGallery.file_name;
+        item.thumb = this.#imageUrlGenerator(mGallery.file_name);
       } else {
         item.thumb = null;
       }
@@ -52,7 +62,13 @@ class PortfolioService {
       SELECT file_name FROM portfolio_gallery WHERE portfolio_id = ${id}
     `);
 
-    portfolio[0].gallery = gallery;
+    const newGallery = gallery.map((item) => (
+      {
+        url: this.#imageUrlGenerator(item.file_name),
+      }
+    ));
+
+    portfolio[0].gallery = newGallery;
 
     return portfolio[0];
   }
@@ -173,6 +189,30 @@ class PortfolioService {
 
   async deleteCategoryById(id) {
     const query = `DELETE FROM portfolio_category WHERE id = ${id}`;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Portfolio data not found');
+    }
+
+    return result;
+  }
+
+  async validatePortfolioId(id) {
+    const query = `SELECT id FROM portfolio WHERE id = ${id}`;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Portfolio data not found');
+    }
+  }
+
+  async addPortfolioImage(id, fileName) {
+    const query = `
+      INSERT INTO portfolio_gallery (portfolio_id, file_name)
+      VALUES ('${id}', '${fileName}')`;
 
     const result = await this.#pool.query(query);
 
