@@ -39,6 +39,30 @@ const routes = (handler) => [
       auth: 'reskimulud_jwt',
     },
   },
+  {
+    method: 'POST',
+    path: '/portfolio/categories',
+    handler: handler.postPortfolioCategory,
+    options: {
+      auth: 'reskimulud_jwt',
+    },
+  },
+  {
+    method: 'PUT',
+    path: '/portfolio/categories/{id}',
+    handler: handler.putPortfolioCategoryById,
+    options: {
+      auth: 'reskimulud_jwt',
+    },
+  },
+  {
+    method: 'DELETE',
+    path: '/portfolio/categories/{id}',
+    handler: handler.deletePortfolioCategoryById,
+    options: {
+      auth: 'reskimulud_jwt',
+    },
+  },
 ];
 
 module.exports = routes;

@@ -144,6 +144,44 @@ class PortfolioService {
 
     return result;
   }
+
+  async addCategory(name) {
+    const query = `INSERT INTO portfolio_category (name) VALUES ('${name}')`;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Portfolio data not found');
+    }
+
+    return result;
+  }
+
+  async updateCategoryById(id, name) {
+    const query = `
+      UPDATE portfolio_category SET name = '${name}' WHERE id = ${id}
+    `;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Portfolio data not found');
+    }
+
+    return result;
+  }
+
+  async deleteCategoryById(id) {
+    const query = `DELETE FROM portfolio_category WHERE id = ${id}`;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('Portfolio data not found');
+    }
+
+    return result;
+  }
 }
 
 module.exports = PortfolioService;

@@ -19,6 +19,10 @@ class PortfolioHandler {
     this.postPortfolio = this.postPortfolio.bind(this);
     this.putPortfolio = this.putPortfolio.bind(this);
     this.deletePortfolio = this.deletePortfolio.bind(this);
+    this.postPortfolioCategory = this.postPortfolioCategory.bind(this);
+    this.putPortfolioCategoryById = this.putPortfolioCategoryById.bind(this);
+    // eslint-disable-next-line max-len
+    this.deletePortfolioCategoryById = this.deletePortfolioCategoryById.bind(this);
   }
 
   async getPortfolio() {
@@ -115,6 +119,50 @@ class PortfolioHandler {
     return {
       status: 'success',
       message: 'Portfolio deleted successfully',
+    };
+  }
+
+  async postPortfolioCategory(request, h) {
+    // eslint-disable-next-line max-len
+    await this.#portfolioValidator.validatePortfolioCategoryPayload(request.payload);
+
+    const { name } = request.payload;
+
+    const result = await this.#portfolioService.addCategory(name);
+
+    const response = h.response({
+      status: 'success',
+      message: 'Portfolio Category added successfully',
+      data: {
+        id: result.insertId,
+      },
+    });
+    response.code(201);
+    return response;
+  }
+
+  async putPortfolioCategoryById(request, h) {
+    // eslint-disable-next-line max-len
+    await this.#portfolioValidator.validatePortfolioCategoryPayload(request.payload);
+    const { id } = request.params;
+    const { name } = request.payload;
+
+    await this.#portfolioService.updateCategoryById(id, name);
+
+    return {
+      status: 'success',
+      message: 'Portfolio Category updated successfully',
+    };
+  }
+
+  async deletePortfolioCategoryById(request, h) {
+    const { id } = request.params;
+
+    await this.#portfolioService.deleteCategoryById(id);
+
+    return {
+      status: 'success',
+      message: 'Portfolio Category deleted successfully',
     };
   }
 }

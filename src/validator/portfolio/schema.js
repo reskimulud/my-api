@@ -11,4 +11,8 @@ const PortfolioPayloadSchema = Joi.object({
   date: Joi.number().required(),
 });
 
-module.exports = { PortfolioPayloadSchema };
+const PortfolioCategoryPayloadSchema = Joi.object({
+  name: Joi.string().required(),
+});
+
+module.exports = { PortfolioPayloadSchema, PortfolioCategoryPayloadSchema };
