@@ -1,5 +1,6 @@
 const Pool = require('../../conf/PoolMysql');
 const NotFoundError = require('../../exception/NotFoundError');
+const { imageUrlGenerator } = require('../../utils');
 
 class AboutService {
   #pool;
@@ -10,7 +11,23 @@ class AboutService {
 
   async getAbout() {
     const result = await this.#pool.query('SELECT * FROM about');
-    return result[0];
+    const about = result[0];
+
+    return {
+      name: about.name,
+      email: about.email,
+      description: about.description,
+      address: about.address,
+      gmaps: about.gmaps,
+      telp: about.telp,
+      github: about.github,
+      facebook: about.facebook,
+      instagram: about.instagram,
+      twitter: about.twitter,
+      pinterest: about.pinterest,
+      linkedin: about.linkedin,
+      image_url: imageUrlGenerator('about', about.image),
+    };
   }
 
   async updateAbout(id, {
@@ -26,7 +43,6 @@ class AboutService {
     twitter,
     pinterest,
     linkedin,
-    image,
   }) {
     const query = `UPDATE about SET name = '${name}',
       email = '${email}',
@@ -39,16 +55,31 @@ class AboutService {
       instagram = '${instagram}', 
       twitter = '${twitter}', 
       pinterest = '${pinterest}', 
-      linkedin = '${linkedin}', 
-      image = '${image}'
+      linkedin = '${linkedin}'
       WHERE id = ${id}`;
-
-    console.log(query);
 
     const result = await this.#pool.query(query);
     if (!result || result.length < 1 || result.affectedRows < 1) {
       throw new NotFoundError('About data not found');
     }
+  }
+
+  async updateAboutImage(fileName) {
+    const oldFileName = await this.#pool.query(
+        'SELECT image FROM about WHERE id = 1',
+    );
+
+    const query = `
+      UPDATE about SET image = '${fileName}'
+    `;
+
+    const result = await this.#pool.query(query);
+
+    if (!result || result.length < 1 || result.affectedRows < 1) {
+      throw new NotFoundError('About data not found');
+    }
+
+    return oldFileName[0].image;
   }
 }
 

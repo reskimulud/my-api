@@ -13,7 +13,6 @@ const AboutPayloadSchema = Joi.object({
   twitter: Joi.string().allow('', null),
   pinterest: Joi.string().allow('', null),
   linkedin: Joi.string().allow('', null),
-  image: Joi.string().required(),
 });
 
 module.exports = {AboutPayloadSchema};

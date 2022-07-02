@@ -2,22 +2,13 @@
 const Pool = require('../../conf/PoolMysql');
 const InvariantError = require('../../exception/InvariantError');
 const NotFoundError = require('../../exception/NotFoundError');
+const { imageUrlGenerator } = require('../../utils');
 
 class PortfolioService {
   #pool;
 
   constructor() {
     this.#pool = new Pool();
-  }
-
-  #imageUrlGenerator(filename) {
-    const host = process.env.HOST;
-    const port = process.env.PORT;
-    if (port === 443) {
-      return `https://${host}/portfolio/image/${filename}`;
-    } else {
-      return `http://${host}:${port}/portfolio/image/${filename}`;
-    }
   }
 
   async getPortfolio() {
@@ -39,7 +30,7 @@ class PortfolioService {
         gal.portfolio_id === item.id
       ))[0];
       if (mGallery) {
-        item.thumb = this.#imageUrlGenerator(mGallery.file_name);
+        item.thumb = imageUrlGenerator('portfolio', mGallery.file_name);
       } else {
         item.thumb = null;
       }
@@ -64,7 +55,7 @@ class PortfolioService {
 
     const newGallery = gallery.map((item) => (
       {
-        url: this.#imageUrlGenerator(item.file_name),
+        url: imageUrlGenerator('portfolio', item.file_name),
       }
     ));
 

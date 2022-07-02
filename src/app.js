@@ -98,8 +98,10 @@ const init = async () => {
     {
       plugin: about,
       options: {
-        service: aboutService,
-        validator: AboutValidator,
+        aboutService,
+        storageService,
+        aboutValidator: AboutValidator,
+        uploadsValidator: UploadsValidator,
       },
     },
     {
