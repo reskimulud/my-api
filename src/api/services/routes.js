@@ -3,9 +3,6 @@ const routes = (handler) => [
     method: 'GET',
     path: '/services',
     handler: handler.getServices,
-    options: {
-      auth: 'reskimulud_jwt',
-    },
   },
   {
     method: 'POST',

@@ -5,9 +5,6 @@ const routes = (handler) => [
     method: 'GET',
     path: '/about',
     handler: handler.getAbout,
-    options: {
-      auth: 'reskimulud_jwt',
-    },
   },
   {
     method: 'PUT',

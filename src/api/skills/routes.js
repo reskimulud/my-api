@@ -3,9 +3,6 @@ const routes = (handler) => [
     method: 'GET',
     path: '/skills',
     handler: handler.getSkills,
-    options: {
-      auth: 'reskimulud_jwt',
-    },
   },
   {
     method: 'POST',
@@ -35,9 +32,6 @@ const routes = (handler) => [
     method: 'GET',
     path: '/skills/categories',
     handler: handler.getCategories,
-    options: {
-      auth: 'reskimulud_jwt',
-    },
   },
   {
     method: 'POST',
