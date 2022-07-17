@@ -1,12 +1,11 @@
-const Pool = require('../../conf/PoolMysql');
 const NotFoundError = require('../../exception/NotFoundError');
 const { imageUrlGenerator } = require('../../utils');
 
 class AboutService {
   #pool;
 
-  constructor() {
-    this.#pool = new Pool();
+  constructor(pool) {
+    this.#pool = pool;
   }
 
   async getAbout() {

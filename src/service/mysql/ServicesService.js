@@ -1,12 +1,11 @@
-const Pool = require('../../conf/PoolMysql');
 const InvariantError = require('../../exception/InvariantError');
 const NotFoundError = require('../../exception/NotFoundError');
 
 class ServicesService {
   #pool;
 
-  constructor() {
-    this.#pool = new Pool();
+  constructor(pool) {
+    this.#pool = pool;
   }
 
   async getServices() {

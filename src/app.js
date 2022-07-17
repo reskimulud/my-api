@@ -4,6 +4,7 @@ const Hapi = require('@hapi/hapi');
 const path = require('path');
 const Inert = require('@hapi/inert');
 const Jwt = require('@hapi/jwt');
+const Pool = require('./conf/PoolMysql');
 
 const ClientError = require('./exception/ClientError');
 
@@ -42,12 +43,13 @@ const StorageService = require('./service/storage/StorageService');
 const UploadsValidator = require('./validator/uploads');
 
 const init = async () => {
-  const aboutService = new AboutService();
-  const skillsService = new SkillsService();
-  const experiencesService = new ExperiencesService();
-  const educationsService = new EducationsService();
-  const servicesService = new ServicesService();
-  const portfolioService = new PortfolioService();
+  const pool = new Pool();
+  const aboutService = new AboutService(pool);
+  const skillsService = new SkillsService(pool);
+  const experiencesService = new ExperiencesService(pool);
+  const educationsService = new EducationsService(pool);
+  const servicesService = new ServicesService(pool);
+  const portfolioService = new PortfolioService(pool);
   // eslint-disable-next-line max-len
   const storageService = new StorageService(path.resolve(__dirname, 'public/images'));
 

@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-const Pool = require('../../conf/PoolMysql');
 const InvariantError = require('../../exception/InvariantError');
 const NotFoundError = require('../../exception/NotFoundError');
 const { imageUrlGenerator } = require('../../utils');
@@ -7,8 +6,8 @@ const { imageUrlGenerator } = require('../../utils');
 class PortfolioService {
   #pool;
 
-  constructor() {
-    this.#pool = new Pool();
+  constructor(pool) {
+    this.#pool = pool;
   }
 
   async getPortfolio() {
